@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Remera Adidas Actual",
+    "description": "Remera de verano",
+    "price": 320,
+    "thumbnail": "",
+    "code": "AMC1001",
+    "stock": 111
+  },
+  {
+    "id": 2,
+    "title": "Nuevo producto",
+    "description": "Descripción nuevo productp",
+    "price": 350,
+    "thumbnail": "",
+    "code": "AMC1002",
+    "stock": 25
+  }
+]
