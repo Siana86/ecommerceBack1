@@ -1,11 +1,14 @@
 import express from "express";
 import ProductManager from "./ProductManager.js";
+import CartManager from "./cartManager.js";
+
 
 const app = express();
 
 app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el server
 
 const productManager = new ProductManager("./src/products.json");
+const cartManager = new CartManager("./src/carts.json");
 
 //GET: Get products
 app.get("/", (req, res) => {
@@ -69,6 +72,16 @@ app.get("/api/products/:pid", async (req, res) =>
     }
 });
 
+//POST: Add cart
+app.post("/api/carts", async (req, res) => {
+    try {
+        const newCart = req.body;
+        const carts = await cartManager.addCart(newCart);
+        res.status(201).json({status:"success", carts});
+    } catch (error) {
+        res.status(500).json({ status: "error" }); //TO DO: mejorar respuesta del error
+    }
+});
 
 
 app.listen(8080, () => {

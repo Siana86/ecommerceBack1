@@ -13,7 +13,7 @@ class ProductManager {
             const products = JSON.parse(fileData);
             return products;
         } catch (error) {
-            throw new Error("Error al traer los productos - ", error.message);
+            throw new Error(`Error al traer los productos - ${error.message}`);
         }
     }
 
@@ -40,7 +40,7 @@ class ProductManager {
             await fs.promises.writeFile(this.pathFile, JSON.stringify(products, null, 2), "utf-8");
             return products;
         } catch (error) {
-            throw new Error("Error al añadir el producto - ", error.message);
+            throw new Error(`Error al añadir el producto -  ${error.message}`);
         }
     }
 
@@ -58,7 +58,7 @@ class ProductManager {
             return product;
 
         } catch (error) {
-            throw new Error(`Error al buscar producto por ID: ${error.message}`);
+            throw new Error(`Error al buscar producto por Id: ${error.message}`);
 
         }
     }
