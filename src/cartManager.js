@@ -51,8 +51,8 @@ class CartManager {
 
             const carts = await this.getCarts();
             const newId = this.generateNewId(carts);
-            const cart = { 
-                id: newId, 
+            const cart = {
+                id: newId,
                 products: Array.isArray(newCart.products) ? newCart.products : []
             };
             carts.push(cart);
@@ -61,6 +61,41 @@ class CartManager {
             return carts;
         } catch (error) {
             throw new Error(`Error al crear el carrito - ${error.message}`);
+        }
+    }
+
+    async addProductToCart(idCart, idProduct) {
+        try {
+            const carts = await this.getCarts();
+            const cartIndex = carts.findIndex((c) => c.id === parseInt(idCart));
+
+            if (cartIndex < 0) {
+                throw new Error(`Carrito con id ${idCart} no encontrado`);
+            }
+
+            const cart = carts[cartIndex];
+
+            const productIndex = cart.products.findIndex(
+                (p) => p.product === parseInt(idProduct)
+            );
+
+            if (productIndex >= 0) {
+                cart.products[productIndex].quantity += 1;
+            } else {
+                cart.products.push({
+                    product: parseInt(idProduct),
+                    quantity: 1,
+                });
+            }
+
+            carts[cartIndex] = cart;
+            await fs.promises.writeFile(this.pathFile, JSON.stringify(carts, null, 2), "utf-8");
+
+            return cart;
+        } catch (error) {
+            throw new Error(
+                `Error al agregar producto al carrito ${idCart} - ${error.message}`
+            );
         }
     }
 
