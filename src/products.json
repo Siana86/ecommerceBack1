@@ -1,20 +1,35 @@
 [
   {
     "id": 1,
-    "title": "Remera Adidas Actual",
-    "description": "Remera de verano",
-    "price": 320,
+    "title": "Remera manga larga",
+    "description": "Remera manga larga 100% algodón",
+    "category": "Indumentaria",
+    "price": 350,
     "thumbnail": "",
     "code": "AMC1001",
-    "stock": 111
+    "stock": 25,
+    "status": "true"
   },
   {
     "id": 2,
-    "title": "Nuevo producto",
-    "description": "Descripción nuevo productp",
-    "price": 350,
+    "title": "Remera cuello tipo V",
+    "description": "Remera cuello tipo V elastisada",
+    "category": "Indumentaria",
+    "price": 300,
     "thumbnail": "",
     "code": "AMC1002",
-    "stock": 25
+    "stock": 15,
+    "status": "true"
+  },
+  {
+    "id": 3,
+    "title": "Camisa manga corta estampada",
+    "description": "Camisa de algodón con diseño floral, ideal para verano",
+    "category": "Indumentaria",
+    "price": 450,
+    "thumbnail": "",
+    "code": "AMC2001",
+    "stock": 25,
+    "status": "true"
   }
 ]

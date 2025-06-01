@@ -44,12 +44,12 @@ class ProductManager {
         }
     }
 
-    async getProductById(id) {
+    async getProductById(idProduct) {
         try {
 
             const products = await this.getProducts();
-            const product = products.find(p => p.id === id);
-
+            const product = products.find(p => p.id === parseInt(idProduct));
+            
             if (!product) {
                 console.error("Not found");
                 return null;

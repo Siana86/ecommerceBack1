@@ -7,7 +7,7 @@ app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el 
 
 const productManager = new ProductManager("./src/products.json");
 
-//GET - Obtener datos
+//GET: Get products
 app.get("/", (req, res) => {
 
     res.json({ status: "success", message: "Solicitud recibida" });
@@ -23,7 +23,7 @@ app.get("/api/products", async (req, res) => {
     }
 });
 
-//POST
+//POST: Add product
 app.post("/api/products", async (req, res) => {
     try {
         const newProduct = req.body;
@@ -34,7 +34,7 @@ app.post("/api/products", async (req, res) => {
     }
 });
 
-//DELETE
+//DELETE: Delete product by id
 app.delete("/api/products/:pid", async (req, res) => {
     try {
         const productId = req.params.pid;
@@ -45,7 +45,7 @@ app.delete("/api/products/:pid", async (req, res) => {
     }
 });
 
-//PUT
+//PUT: Updtae product by id
 app.put("/api/products/:pid", async (req, res) => {
     try {
         const productId = req.params.pid;
@@ -58,7 +58,18 @@ app.put("/api/products/:pid", async (req, res) => {
     }
 });
 
-//getProductBy
+//GET: getProductBy 
+app.get("/api/products/:pid", async (req, res) =>
+    {try {
+        const productId = req.params.pid;
+        const product = await productManager.getProductById(productId);
+        res.status(200).json({status: "success", product});
+    } catch (error) {
+        res.status(500).json({status: "error"}) //TO DO: mejorar respuesta del error 
+    }
+});
+
+
 
 app.listen(8080, () => {
     console.log("Servidor iniciado en el puerto 8080");
