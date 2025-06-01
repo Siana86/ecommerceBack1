@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "products": []
+    "products": ["carro 1"]
   },
   {
     "id": 2,
-    "products": []
+    "products": ["carro 2"]
   }
 ]

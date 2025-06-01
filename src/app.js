@@ -84,6 +84,17 @@ app.post("/api/carts", async (req, res) => {
 });
 
 
+//GET: getCartById
+app.get("/api/carts/:cid", async (req, res) =>
+    {try {
+        const cartId = req.params.cid;
+        const cart = await cartManager.getCartById(cartId);
+        res.status(200).json({status: "success", cart});
+    } catch (error) {
+        res.status(500).json({status: "error"}) //TO DO: mejorar respuesta del error 
+    }
+});
+
 app.listen(8080, () => {
     console.log("Servidor iniciado en el puerto 8080");
 });
