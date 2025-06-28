@@ -47,13 +47,11 @@ class CartManager {
     async addCart(newCart) {
         try {
 
-            const fileData = await fs.promises.readFile(this.pathFile, "utf-8");
-
             const carts = await this.getCarts();
             const newId = this.generateNewId(carts);
             const cart = {
                 id: newId,
-                products: Array.isArray(newCart.products) ? newCart.products : []
+                products: []
             };
             carts.push(cart);
 
@@ -93,9 +91,7 @@ class CartManager {
 
             return cart;
         } catch (error) {
-            throw new Error(
-                `Error al agregar producto al carrito ${idCart} - ${error.message}`
-            );
+            throw new Error(`Error al agregar producto al carrito ${idCart} - ${error.message}`);
         }
     }
 

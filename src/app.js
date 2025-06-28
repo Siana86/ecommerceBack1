@@ -1,14 +1,36 @@
 import express from "express";
 import ProductManager from "./ProductManager.js";
 import CartManager from "./cartManager.js";
+import { engine } from "express-handlebars";
 
-
-const app = express();
-
-app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el server
 
 const productManager = new ProductManager("./src/products.json");
 const cartManager = new CartManager("./src/carts.json");
+
+const app = express();
+app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el server (min 34)
+
+
+
+//Handlerbars config 
+
+app.engine("handlebars" , engine());
+app.set("view engine", "handlebars");
+app.set("views", "./src/views");
+
+const products = await productManager.getProducts();
+
+//Endpoints 
+app.get("/" , (req, res) => {
+        res.render("home", {products});
+})
+
+
+app.get("/realTimeProducts" , (req , res) => {
+    res.render(realTimeProducts);
+})
+
+
 
 //GET: Get products
 app.get("/", (req, res) => {
