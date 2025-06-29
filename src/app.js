@@ -1,34 +1,42 @@
-import express from "express";
+import express, { urlencoded } from "express";
+import http from "http";
 import ProductManager from "./ProductManager.js";
 import CartManager from "./cartManager.js";
 import { engine } from "express-handlebars";
+import viewsRouter from "./routes/views.router.js";
+import productsRouter from "./routes/products.router.js";
+import { Server } from "socket.io";
 
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+const PORT = 8080;
 
+//Incializar gestor de productos y de carritos
 const productManager = new ProductManager("./src/products.json");
 const cartManager = new CartManager("./src/carts.json");
 
-const app = express();
-app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el server (min 34)
 
+app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el server (1H 26min)
+app.use(express.static("public"));
+app.use(urlencoded({extended: true }));
 
 
 //Handlerbars config 
-
 app.engine("handlebars" , engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
-const products = await productManager.getProducts();
+//EndPoints
+app.use("/", viewsRouter);
+app.use("/api/products", productsRouter);
 
-//Endpoints 
-app.get("/" , (req, res) => {
-        res.render("home", {products});
+
+//Websockets desde el server 
+io.on("connection", (socket) =>{
+    console.log("Conexion websockets establecida")
 })
 
-
-app.get("/realTimeProducts" , (req , res) => {
-    res.render(realTimeProducts);
-})
 
 
 
@@ -48,16 +56,6 @@ app.get("/api/products", async (req, res) => {
     }
 });
 
-//POST: Add product
-app.post("/api/products", async (req, res) => {
-    try {
-        const newProduct = req.body;
-        const products = await productManager.addProduct(newProduct);
-        res.status(201).json({ status: "success", products });
-    } catch (error) {
-        res.status(500).json({ status: "error" }); //TO DO: mejorar respuesta del error
-    }
-});
 
 //DELETE: Delete product by id
 app.delete("/api/products/:pid", async (req, res) => {
@@ -132,6 +130,6 @@ app.post("/api/carts/:cid/product/:pid", async (req, res) => {
 });
 
 
-app.listen(8080, () => {
+server.listen(PORT, () => {
     console.log("Servidor iniciado en el puerto 8080");
 });

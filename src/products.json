@@ -5,7 +5,7 @@
     "description": "Remera manga larga 100% algodón",
     "category": "Indumentaria",
     "price": 350,
-    "thumbnail": "",
+    "thumbnail": "https://res.cloudinary.com/dufkpsvbz/image/upload/v1746367770/Remera_Y2V_Oversized_SS_qecowo.jpg",
     "code": "AMC1001",
     "stock": 25,
     "status": "true"
@@ -16,7 +16,7 @@
     "description": "Remera cuello tipo V elastisada",
     "category": "Indumentaria",
     "price": 300,
-    "thumbnail": "",
+    "thumbnail": "https://res.cloudinary.com/dufkpsvbz/image/upload/v1746367770/Buzo_Everyday_OS_Zip_Hoodie_ctndux.jpg",
     "code": "AMC1002",
     "stock": 15,
     "status": "true"
@@ -27,9 +27,20 @@
     "description": "Camisa de algodón con diseño floral, ideal para verano",
     "category": "Indumentaria",
     "price": 450,
-    "thumbnail": "",
+    "thumbnail": "https://res.cloudinary.com/dufkpsvbz/image/upload/v1746367770/Buzos_Vans_Arched_Pullover_sp2l8s.jpg",
     "code": "AMC2001",
     "stock": 25,
     "status": "true"
+  },
+  {
+    "id": 4,
+    "title": "Campera McAvoy Zip",
+    "description": "La campera Mcavoy Zip Station es una campera de sarga de algodón de peso medio con un cierre frontal oculto y muchos bolsillos para guardar tus cosas, terminada con una etiqueta Vans® tejida en el dobladillo, tejido de sarga de algodón de peso medio, cierre frontal ocultoy bolsillos de mano abiertos.",
+    "category": "Indumentaria",
+    "price": "560",
+    "thumbnail": "https://res.cloudinary.com/dufkpsvbz/image/upload/v1746367770/Campera_McAvoy_Zip_Station_Jacket_p2icex.jpg",
+    "code": "AMC1004",
+    "stock": "60",
+    "status": "Si"
   }
 ]
