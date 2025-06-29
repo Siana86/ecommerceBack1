@@ -1,7 +1,7 @@
 <h1> Real time products</h1>
 
 <div>
-    <form action="http://localhost:8080/api/products" method="post">
+    <form id="FormNewProduct" action="http://localhost:8080/api/products" method="post">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Nombre del producto</label>
             <input type="text" name="title" class="form-control" id="exampleFormControlInput1"
@@ -57,4 +57,12 @@
 <script>
 //Websocket desde el cliente
     const socket = io();
+
+    const FormNewProduct = document.getElementById("FormNewProduct");
+
+    FormNewProduct.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
+
 </script>
+
