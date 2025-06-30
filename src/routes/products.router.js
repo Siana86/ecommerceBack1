@@ -1,5 +1,6 @@
 import express from "express";
 import ProductManager from "../ProductManager.js";
+import { Server } from "socket.io";
 
 
 const productsRouter = express.Router();
