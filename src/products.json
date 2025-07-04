@@ -31,16 +31,5 @@
     "code": "AMC2001",
     "stock": 25,
     "status": "true"
-  },
-  {
-    "id": 4,
-    "title": "Campera McAvoy Zip",
-    "description": "La campera Mcavoy Zip Station es una campera de sarga de algodón de peso medio con un cierre frontal oculto y muchos bolsillos para guardar tus cosas, terminada con una etiqueta Vans® tejida en el dobladillo, tejido de sarga de algodón de peso medio, cierre frontal ocultoy bolsillos de mano abiertos.",
-    "category": "Indumentaria",
-    "price": "560",
-    "thumbnail": "https://res.cloudinary.com/dufkpsvbz/image/upload/v1746367770/Campera_McAvoy_Zip_Station_Jacket_p2icex.jpg",
-    "code": "AMC1004",
-    "stock": "60",
-    "status": "Si"
   }
 ]

@@ -1,32 +1,33 @@
 <h1> Real time products</h1>
+<h2> Agregar producto </h2>
 
 <div>
-    <form id="FormNewProduct" action="http://localhost:8080/api/products" method="post">
+    <form id="formNewProduct" action="http://localhost:8080/api/products" method="post">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Nombre del producto</label>
             <input type="text" name="title" class="form-control" id="exampleFormControlInput1"
-                placeholder="Nombre del producto">
+                placeholder="Nombre del producto" required>
 
             <label for="exampleFormControlInput1" class="form-label">Descripción del producto</label>
-            <input type="text" name="description" class="form-control" id="exampleFormControlInput1">
+            <input type="text" name="description" class="form-control" id="exampleFormControlInput1" required>
 
             <label for="exampleFormControlInput1" class="form-label">Categoría</label>
-            <input type="text" name="category" class="form-control" id="exampleFormControlInput1">
+            <input type="text" name="category" class="form-control" id="exampleFormControlInput1" required>
 
             <label for="exampleFormControlInput1" class="form-label">Precio</label>
-            <input type="text" name="price" class="form-control" id="exampleFormControlInput1"
-                placeholder="Precio del producto">
+            <input type="number" name="price" class="form-control" id="exampleFormControlInput1"
+                placeholder="Precio del producto" required>
 
             <label for="exampleFormControlInput1" class="form-label">Imagen del producto</label>
             <input type="text" name="thumbnail" class="form-control" id="exampleFormControlInput1"
-                placeholder="URL de la imagen del producto">
+                placeholder="URL de la imagen del producto" required>
 
             <label for="exampleFormControlInput1" class="form-label">Código</label>
             <input type="text" name="code" class="form-control" id="exampleFormControlInput1"
-                placeholder="Código del producto">
+                placeholder="Código del producto" required>
 
             <label for="exampleFormControlInput1" class="form-label">Stock</label>
-            <input type="text" name="stock" class="form-control" id="exampleFormControlInput1"
+            <input type="number" name="stock" class="form-control" id="exampleFormControlInput1"
                 placeholder="Cantidad de unidades disponibles en invetario">
 
             <label for="exampleFormControlInput1" class="form-label">Disponible</label>
@@ -38,11 +39,12 @@
     </form>
 </div>
 
+<h2>Listado de productos</h2>
 
-<div class="container">
+<div id="productsList" class="col">
     {{#each products}}
 <div class="card" style="width: 18rem;">
-        <img src="{{this.thumbnail}}" class="card-img-top" alt="...">
+        <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}">
         <div class="card-body">
             <h5 class="card-title">{{this.title}}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">{{this.category}}</h6>
@@ -55,39 +57,7 @@
 </div>
 
 
-
-
 <script src="/socket.io/socket.io.js"></script>
-<script>
-//Websocket desde el cliente
-    const socket = io();
+<script src="/js/index.js"></script>
 
-    const FormNewProduct = document.getElementById("FormNewProduct");
-
-    FormNewProduct.addEventListener("submit", (event) => {
-        event.preventDefault();
-    });
-
-    document.getElementById('product-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const newProduct = {
-        title: document.getElementById('title').value,
-        description: document.getElementById('description').value,
-        category: document.getElementById('category').value,
-        price: parseFloat(document.getElementById('price').value),
-        thumbnail: document.getElementById('thumbnail')?.value || null,
-        code: document.getElementById('code').value ,
-        stock: parseInt(document.getElementById('stock').value),
-        status: document.getElementById('status').value === 'true',        
-    };
-    
-
-    socket.emit('new Product', newProduct);
-    e.target.reset();
-});
-
-
-
-</script>
 

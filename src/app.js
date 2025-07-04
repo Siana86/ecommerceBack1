@@ -16,14 +16,16 @@ const PORT = 8080;
 const productManager = new ProductManager("./src/products.json");
 const cartManager = new CartManager("./src/carts.json");
 
+//Habilitar recepcion datos tipos json en el server
+app.use(express.json());
 
-app.use(express.json()); //Habilita que se pueda recibir datos tipos json en el server (1H 26min)
+//Habilitar la carpeta public
 app.use(express.static("public"));
-app.use(urlencoded({extended: true }));
+app.use(urlencoded({ extended: true }));
 
 
 //Handlerbars config 
-app.engine("handlebars" , engine());
+app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
@@ -33,9 +35,20 @@ app.use("/api/products", productsRouter);
 
 
 //Websockets desde el server 
-io.on("connection", (socket) =>{
-    console.log("Conexion websockets establecida")
-})
+io.on("connection", (socket) => {
+    console.log("Conexion websockets establecida desde app server")
+
+    socket.on("newProduct", async (productData) => {
+        try {
+            const newProduct = await productManager.addProduct(productData);
+            
+            io.emit("productAdded", newProduct)
+        } catch (error) {
+            console.error("Error al añadir un producto");
+        }
+    });
+});
+
 
 
 server.listen(PORT, () => {
