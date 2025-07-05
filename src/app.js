@@ -38,13 +38,25 @@ app.use("/api/products", productsRouter);
 io.on("connection", (socket) => {
     console.log("Conexion websockets establecida desde app server")
 
+    //Agregar nuevo producto
     socket.on("newProduct", async (productData) => {
         try {
             const newProduct = await productManager.addProduct(productData);
-            
+
             io.emit("productAdded", newProduct)
         } catch (error) {
             console.error("Error al añadir un producto");
+        }
+    });
+
+    //Eliminar un producto 
+    socket.on("deleteProduct", async productId => {
+        try {
+            await productManager.deleteProductById(productId);
+            io.emit("productDeleted", productId);
+        } catch (err) {
+            socket.emit("errorMsg", "No se pudo eliminar el producto.");
+            console.error(err);
         }
     });
 });

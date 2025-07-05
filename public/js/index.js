@@ -2,6 +2,7 @@
 const socket = io();
 
 const formNewProduct = document.getElementById("formNewProduct");
+const productsList = document.getElementById("productsList");
 
 formNewProduct.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -19,12 +20,11 @@ formNewProduct.addEventListener("submit", (event) => {
 });
 
 
-socket.on ("productAdded", (newProduct) => {
-    const productsList = document.getElementById("productsList");
+socket.on("productAdded", (newProduct) => {
 
     productsList.innerHTML += 
-    `<div class="col">
-        <div class="card h-100" style="width: 18rem;">
+    `<div  id="productsList" class="col" >
+        <div class="card h-100" style="width: 18rem;" data-id="${newProduct.id}">
         <img src="${newProduct.thumbnail}" class="card-img-top" alt="${newProduct.title}">
         <div class="card-body">
             <h5 class="card-title">${newProduct.title}</h5>
@@ -33,9 +33,23 @@ socket.on ("productAdded", (newProduct) => {
             <h6 class="card-subtitle mb-2 text-body-secondary">
             $${Number(newProduct.price).toLocaleString("es-AR")}
             </h6>
+            <button class="btn btn-danger btn-delete" data-id="${newProduct.id}">Eliminar</button>
             <a href="#" class="btn btn-primary">Comprar</a>
         </div>
         </div>
     </div>`;
+});
+
+//Eliminar producto
+productsList.addEventListener("click", e => {
+    if (e.target.matches(".btn-delete")) {
+        const id = e.target.dataset.id;
+        socket.emit("deleteProduct", id);
+    }
+});
+
+socket.on("productDeleted", productId => {
+    const card = productsList.querySelector(`[data-id="${productId}"]`);
+    if (card) card.remove();
 });
 
