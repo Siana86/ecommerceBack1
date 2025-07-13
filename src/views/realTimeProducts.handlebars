@@ -5,34 +5,36 @@
     <form id="formNewProduct" action="http://localhost:8080/api/products" method="post">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Nombre del producto</label>
-            <input type="text" name="title" class="form-control" id="exampleFormControlInput1"
-                placeholder="Nombre del producto" required>
+            <input type="text" name="title" class="form-control" id="titleInput" placeholder="Nombre del producto"
+                required>
 
             <label for="exampleFormControlInput1" class="form-label">Descripción del producto</label>
-            <input type="text" name="description" class="form-control" id="exampleFormControlInput1" required>
+            <input type="text" name="description" class="form-control" id="descriptionInput" required>
 
             <label for="exampleFormControlInput1" class="form-label">Categoría</label>
-            <input type="text" name="category" class="form-control" id="exampleFormControlInput1" required>
+            <input type="text" name="category" class="form-control" id="categoryInput" required>
 
             <label for="exampleFormControlInput1" class="form-label">Precio</label>
-            <input type="number" name="price" class="form-control" id="exampleFormControlInput1"
-                placeholder="Precio del producto" required>
+            <input type="number" name="price" class="form-control" id="priceInput1" placeholder="Precio del producto"
+                required>
 
             <label for="exampleFormControlInput1" class="form-label">Imagen del producto</label>
-            <input type="text" name="thumbnail" class="form-control" id="exampleFormControlInput1"
+            <input type="text" name="thumbnail" class="form-control" id="thumbnailInput"
                 placeholder="URL de la imagen del producto" required>
 
             <label for="exampleFormControlInput1" class="form-label">Código</label>
-            <input type="text" name="code" class="form-control" id="exampleFormControlInput1"
-                placeholder="Código del producto" required>
+            <input type="text" name="code" class="form-control" id="codeInput" placeholder="Código del producto"
+                required>
 
             <label for="exampleFormControlInput1" class="form-label">Stock</label>
-            <input type="number" name="stock" class="form-control" id="exampleFormControlInput1"
+            <input type="number" name="stock" class="form-control" id="stockInput"
                 placeholder="Cantidad de unidades disponibles en invetario">
 
-            <label for="exampleFormControlInput1" class="form-label">Disponible</label>
-            <input type="text" name="status" class="form-control" id="exampleFormControlInput1"
-                placeholder="Indica si el producto esta disponible, ingrese 'Si' o 'No'">
+            <label for="statusInput">Disponible</label>
+            <select name="status" id="statusInput" class="form-control" required>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
 
             <button type="submit"> Enviar </button>
         </div>
@@ -41,22 +43,27 @@
 
 <h2>Listado de productos</h2>
 
-<div id="productsList" class="col"> 
+<div id="productsList" class="col">
     {{#each products}}
-<div class="card" style="width: 18rem;" data-id="{{this.id}}">
-    <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}">
-    <div class="card-body">
-        <h5 class="card-title">{{this.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">{{this.category}}</h6>
-        <p class="card-text">{{this.description}}</p>
-        <h6 class="card-subtitle mb-2 text-body-secondary">{{this.price}}</h6>
-        <button class="btn btn-danger btn-delete" data-id="{{this.id}}">Eliminar</button>
-        <a href="#" class="btn btn-primary">Comprar</a>
+    <div class="card" style="width: 18rem;" data-id="{{this.id}}">
+        <img src="{{this.thumbnail}}" class="card-img-top" alt="{{this.title}}">
+        <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{this.category}}</h6>
+            <p class="card-text">{{this.description}}</p>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{this.price}}</h6>
+            <button class="btn btn-danger btn-delete" data-id="{{this.id}}">Eliminar</button>
+            <a href="#" class="btn btn-primary">Comprar</a>
+        </div>
     </div>
-</div>
-{{/each}}
+    {{/each}}
 </div>
 
+<div>
+    {{#each links}}
+    <a href={{this.link}}>{{this.text}}</a>
+    {{/each}}
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

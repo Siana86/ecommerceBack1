@@ -1,6 +1,7 @@
 //Conectar websockets del lado cliente 
 const socket = io();
 
+
 const formNewProduct = document.getElementById("formNewProduct");
 const productsList = document.getElementById("productsList");
 
@@ -24,7 +25,7 @@ socket.on("productAdded", (newProduct) => {
 
     productsList.innerHTML += 
     `<div  id="productsList" class="col" >
-        <div class="card h-100" style="width: 18rem;" data-id="${newProduct.id}">
+        <div class="card h-100" style="width: 18rem;" data-id="${newProduct._id}">
         <img src="${newProduct.thumbnail}" class="card-img-top" alt="${newProduct.title}">
         <div class="card-body">
             <h5 class="card-title">${newProduct.title}</h5>
@@ -33,7 +34,7 @@ socket.on("productAdded", (newProduct) => {
             <h6 class="card-subtitle mb-2 text-body-secondary">
             $${Number(newProduct.price).toLocaleString("es-AR")}
             </h6>
-            <button class="btn btn-danger btn-delete" data-id="${newProduct.id}">Eliminar</button>
+            <button class="btn btn-danger btn-delete" data-id="${newProduct._id}">Eliminar</button>
             <a href="#" class="btn btn-primary">Comprar</a>
         </div>
         </div>
