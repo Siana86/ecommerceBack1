@@ -1,7 +1,5 @@
 import express, { urlencoded } from "express";
 import http from "http";
-import ProductManager from "./ProductManager.js";
-import CartManager from "./cartManager.js";
 import { engine } from "express-handlebars";
 import viewsRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js";

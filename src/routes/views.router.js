@@ -1,11 +1,8 @@
 import express from "express";
-import ProductManager from "../ProductManager.js";
 import Product from "../models/product.model.js";
 
 
-
 const viewsRouter = express.Router();
-//const productManager = new ProductManager("./src/products.json");
 
 
 //Endpoints 
