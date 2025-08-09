@@ -9,6 +9,8 @@ import dotenv from "dotenv";
 import cartRouter from "./routes/carts.router.js";
 import __dirname from "../dirname.js";
 import Product from "./models/product.model.js";
+import usersRouter from "./routes/users.router.js";
+import bcrypt from 'bcrypt';
 
 
 
@@ -29,6 +31,7 @@ connectMongoDB();
 app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/users", usersRouter);
 
 // app.listen(PORT, () => {
 //     console.log(`Servidor inciado en el pruerto> ${PORT}`);
