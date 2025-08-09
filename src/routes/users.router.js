@@ -3,7 +3,6 @@ import express from 'express';
 import bcrypt from "bcrypt";
 import { auth } from '../middleware/auth.js';
 import User from '../models/user.model.js';
-export const router = Router()
 
 const usersRouter = express.Router();
 
@@ -41,11 +40,16 @@ usersRouter.post("/", async (req, res) => {
             return res.status(400).json({ error: `Nombre / Apellido / email son requeridos` })
         }
 
+        if (!password) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: `Debe ingresar una contraseña`})
+        }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ status: "error", message: "El correo ya está registrado" });
 
         // Hashear la password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hashSync(password, 10);
 
         const user = new User({
             first_name,

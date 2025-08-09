@@ -1,0 +1,14 @@
+<a href="/">Inicio</a>
+<br>
+{{#if isLogin}}
+    <a href="/perfil">Perfil</a>
+    <br>
+    <a href="/api/sessions/logout">Logout</a>
+    <br>
+    <a href="/realTimeProducts">Gestor de productos</a>
+{{else}}
+    <a href="/registro">Registro</a>
+    <br>
+    <a href="/login">Login</a>
+{{/if}}
+<br>

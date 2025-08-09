@@ -1,0 +1,20 @@
+{{>menu}}
+<h2>Registro</h2>
+<hr>
+<form action="/api/sessions/registro" method="post">
+    <input type="text" name="first_name" id="first_name" placeholder="Nombre" required>
+    <input type="text" name="last_name" id="last_name" placeholder="Apellido" required>
+    <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
+    <input type="number" name="age" id="age" placeholder="Edad">
+    <input type="password" name="password" id="password" placeholder="constraseña" required>
+    {{!-- <input type="text" name="role" id="role" placeholder="Rol"> --}}
+    <label for="statusInput">Rol</label>
+            <select name="role" id="role" class="form-control" required>
+                <option value="user">Usuario</option>
+                <option value="admin">Administrador</option>
+            </select>
+
+
+    <input type="submit" value="Registrar">
+
+</form>

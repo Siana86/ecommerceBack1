@@ -11,6 +11,8 @@ import __dirname from "../dirname.js";
 import Product from "./models/product.model.js";
 import usersRouter from "./routes/users.router.js";
 import bcrypt from 'bcrypt';
+import { iniciarPassport } from "./config/passport.config.js";
+import passport from "passport";
 
 
 
@@ -26,6 +28,10 @@ app.use(express.json());
 const PORT = process.env.PORT;
 
 connectMongoDB();
+
+//Paso 2 clase 3 
+iniciarPassport();
+app.use(passport.initialize());
 
 //EndPoints
 app.use("/", viewsRouter);
