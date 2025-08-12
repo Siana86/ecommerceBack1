@@ -18,7 +18,7 @@ btnLogin.addEventListener("click", async(e)=>{
         return 
     }
 
-     let response=await fetch("/api/sessions/login", {
+    let response=await fetch("/login", {
         method: "post", 
         headers:{
             "Content-Type":"application/json"

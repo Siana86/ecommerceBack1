@@ -13,6 +13,7 @@ import usersRouter from "./routes/users.router.js";
 import bcrypt from 'bcrypt';
 import { iniciarPassport } from "./config/passport.config.js";
 import passport from "passport";
+import jwt from "jsonwebtoken";
 
 
 
@@ -39,18 +40,51 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/users", usersRouter);
 
-// app.listen(PORT, () => {
-//     console.log(`Servidor inciado en el pruerto> ${PORT}`);
-// });
 
+//Incia login
+app.post(
+    "/login",
+    passport.authenticate("login", {session:false, failureRedirect:"/error"}),
+    (req, res) => {
 
+        let usuario=req.user
+        delete usuario.password 
+        let token = jwt.sign(usuario.toObject(), process.env.SECRET, { expiresIn: "1h" })
 
+        res.cookie("cookieToken", token, { httpOnly: true })
+        return res.status(200).json({
+            usuarioLogueado: usuario,
+        
+        })
 
+    }
+)
 
-// //Incializar gestor de productos y de carritos
-// const productManager = new ProductManager("./src/products.json");
-// const cartManager = new CartManager("./src/carts.json");
+app.get("/logout", (req, res) => {
 
+    res.clearCookie("cookieToken")
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(200).json({ payload: "Logout exitoso!" });
+})
+
+app.get("/error", (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(400).json({ error: `Error al autenticar` })
+})
+
+//Inica autenticacion de usuario logueado con PassportJWT
+app.get(
+    '/usuario',
+    // paso 3
+    passport.authenticate("current", { session: false, failureRedirect: "/error" }),
+    (req, res) => {
+
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json({
+            mensaje: 'Perfil usuario ' + req.user.nombre, datosUsuario: req.user
+        });
+    }
+);
 
 
 //Habilitar la carpeta public
@@ -62,8 +96,6 @@ app.use(urlencoded({ extended: true }));
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/src/views");
-
-
 
 
 //Websockets desde el server 
