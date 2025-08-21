@@ -5,11 +5,11 @@
 <p><strong>Rol:</strong> {{role}}</p>
 
 {{!-- Condicional por rol --}}
-{{#if (eq user.role "admin")}}
+{{#if (eq role "admin")}}
 <h2>Administrador logueado</h2>
 {{else}}
 <h2>Usuario logueado</h2>
-{{/if}}
+{{/if}} 
 
 
 
