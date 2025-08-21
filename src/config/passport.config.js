@@ -6,7 +6,8 @@ import bcrypt from 'bcrypt';
 import connectMongoDB from "./db.js";
 import User from "../models/user.model.js";
 
-
+//Inicializar variables de entorno
+dotenv.config();
 
 const buscarToken = req => {
     let token = null
@@ -48,10 +49,10 @@ export const iniciarPassport = () => {
                 usernameField: "email",
                 passwordField: "password"
             },
-            async (username, password, done) => {
+            async (email, password, done) => {
                 try {
                     //TO DO: colocar mensajes genericos para la entrega final
-                    const usuario = await User.findOne({ email: username }).populate("cart");
+                    const usuario = await User.findOne({ email}).populate("cart");
                     // if (!usuario) return res.status(400).send({ error: `Error credenciales` })
                     if (!usuario) return done(null, false, { message: "Usuario no encontrado" })  // fallo en la validacion, se deja el msn tan especifico solo por ser desarrollo
 
@@ -62,6 +63,7 @@ export const iniciarPassport = () => {
                     }
 
                     return done(null, usuario)
+
                 } catch (error) {
                     return done(error)
                 }

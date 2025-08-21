@@ -14,25 +14,45 @@ import bcrypt from 'bcrypt';
 import { iniciarPassport } from "./config/passport.config.js";
 import passport from "passport";
 import jwt from "jsonwebtoken";
-
+import cookieParser from "cookie-parser";
 
 
 //Inicializar variables de entorno 
 dotenv.config();
 
-
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+
 //Habilitar recepcion datos tipos json en el server
 app.use(express.json());
+
+//Declarar el uso de urlencode
+app.use(urlencoded({ extended: true }));
+
+//Inicializar cookiparse
+app.use(cookieParser());
+
+
+const server = http.createServer(app);
+const io = new Server(server);
+
 const PORT = process.env.PORT;
 
+//Conectar a MongoDB
 connectMongoDB();
+
+///Handlerbars config con helpers
+app.engine("handlebars", engine({
+    helpers: {
+        eq: (a, b) => a === b
+    }
+}));
+app.set("view engine", "handlebars");
+app.set("views", __dirname + "/src/views");
 
 //Paso 2 clase 3 
 iniciarPassport();
 app.use(passport.initialize());
+
 
 //EndPoints
 app.use("/", viewsRouter);
@@ -40,10 +60,58 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/users", usersRouter);
 
+//Registrar usuario
+app.post('/registro',async(req,res)=>{
+    try {
+        // validaciones...
+    let {first_name, last_name, email, age, password, cart, role }=req.body
+    if(!first_name || !last_name || !email || !password){
+        res.setHeader('Content-Type','application/json');
+        return res.status(400).json({error:`Todos los datos son requeridos`})
+    }
+
+    let usuarioExistente = await usuariosModelo.findOne({ email });
+        if (usuarioExistente) {
+            return res.status(400).json({ error: `El email ya está registrado` });
+        }
+
+    // TO DO: resto validaciones
+
+    {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        
+        let nuevoUsuario=await usuariosModelo.create({
+            first_name, 
+            last_name, 
+            email,
+            age,
+            password: hashedPassword,
+            cart,
+            role
+        })
+        
+        res.setHeader('Content-Type','application/json')
+        res.status(200).json({message:`Registro exitoso para ${nombre}!`, nuevoUsuario})
+
+    };
+    
+    } catch (error) {
+        res.setHeader('Content-Type','application/json');
+        return res.status(500).json({error:`Error: ${error.message}`})
+    }
+});
+
+
 
 //Incia login
 app.post(
     "/login",
+
+    (req, res, next) => {
+        console.log("Datos recibidos en el body:", req.body); // Para saber los datos que llegan en el body
+        next();
+    },
+
     passport.authenticate("login", {session:false, failureRedirect:"/error"}),
     (req, res) => {
 
@@ -89,13 +157,8 @@ app.get(
 
 //Habilitar la carpeta public
 app.use(express.static(__dirname + "/public"));
-app.use(urlencoded({ extended: true }));
 
 
-//Handlerbars config 
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
-app.set("views", __dirname + "/src/views");
 
 
 //Websockets desde el server 

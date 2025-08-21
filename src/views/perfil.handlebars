@@ -1,0 +1,17 @@
+<h1>Perfil</h1>
+<p><strong>Nombre:</strong> {{first_name}}</p>
+<p><strong>Apellido:</strong> {{last_name}}</p>
+<p><strong>Email:</strong> {{email}}</p>
+<p><strong>Rol:</strong> {{role}}</p>
+
+{{!-- Condicional por rol --}}
+{{#if (eq user.role "admin")}}
+<h2>Administrador logueado</h2>
+{{else}}
+<h2>Usuario logueado</h2>
+{{/if}}
+
+
+
+<br>
+<a href="/logout">Cerrar sesión</a>

@@ -1,5 +1,7 @@
 import express from "express";
 import Product from "../models/product.model.js";
+import { auth } from "../middleware/auth.js";
+
 
 
 const viewsRouter = express.Router();
@@ -69,7 +71,19 @@ viewsRouter.get('/login',(req,res)=>{
     res.status(200).render('login', { isLogin });
 });
 
+viewsRouter.get('/perfil', auth, (req,res)=>{
 
+    let {first_name, last_name, email, role}=req.user
+    
+
+    res.status(200).render('perfil', {
+        first_name,
+        last_name,
+        email,
+        role, 
+        isLogin: true
+    })
+})
 
 
 export default viewsRouter;
