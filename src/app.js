@@ -159,8 +159,6 @@ app.get(
 app.use(express.static(__dirname + "/public"));
 
 
-
-
 //Websockets desde el server 
 io.on("connection", (socket) => {
     console.log("Conexion websockets establecida desde app server")
