@@ -15,7 +15,7 @@
     {{/if}}
 
     {{!-- Solo users y admin pueden comprar --}}
-    {{#if (or (eq role "users") (eq role "admin"))}}
+    {{#if (or (eq role "user") (eq role "admin"))}}
         <a href="/carrito">Mi Carrito</a>
         <br>
     {{/if}}

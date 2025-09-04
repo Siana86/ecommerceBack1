@@ -5,7 +5,7 @@ import { ViewsController} from "../controllers/ViewsController.js";
 
 const viewsRouter = express.Router();
 
-viewsRouter.get('/', auth, authorization(["public", "users", "admin"]), ViewsController.getHome);
+viewsRouter.get('/', auth, authorization(["public", "user", "admin"]), ViewsController.getHome);
 viewsRouter.get('/realtimeproducts',auth, authorization(["admin"]), ViewsController.getRealTimeProducts);
 viewsRouter.get('/registro',auth, authorization(["public"]), ViewsController.getRegistro);
 viewsRouter.get('/login', ViewsController.getLogin);
