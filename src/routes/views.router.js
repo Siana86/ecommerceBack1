@@ -1,7 +1,6 @@
 import express from "express";
 import { auth } from "../middleware/auth.js";
-import { ViewsController } from "../controllers/ViewsController.js";
-
+import { ViewsController} from "../controllers/ViewsController.js";
 
 
 const viewsRouter = express.Router();

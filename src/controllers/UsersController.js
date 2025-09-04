@@ -1,12 +1,15 @@
 import UserDAO from "../dao/UsersDAO.js";
 import bcrypt from "bcrypt";
+import UserDTO from "../dto/UsersDTO.js";
+
 
 export class UsersController {
 
     static getUsers = async (req, res) => {
         try {
             const users = await UserDAO.getAll();
-            res.status(200).json({ status: "success", payload: users });
+            const usersDTO = UserDTO.fromList(users);
+            res.status(200).json({ status: "success", payload: usersDTO });
         } catch (error) {
             res.status(500).json({ status: "error", message: error.message });
         }
@@ -16,7 +19,9 @@ export class UsersController {
         try {
             const user = await UserDAO.getById(req.params.uid);
             if (!user) return res.status(404).json({ status: "error", message: "Usuario no encontrado" });
-            res.status(200).json({ status: "success", payload: user });
+
+            const userDTO = new UserDTO(user); 
+            res.status(200).json({ status: "success", payload: userDTO });
         } catch (error) {
             res.status(500).json({ status: "error", message: error.message });
         }
@@ -49,7 +54,8 @@ export class UsersController {
                 role
             });
 
-            res.status(201).json({ status: "success", payload: user });
+            const userDTO = new UserDTO(user); 
+            res.status(201).json({ status: "success", payload: userDTO });
         } catch (error) {
             res.status(500).json({ status: "error", message: error.message });
         }
@@ -67,7 +73,8 @@ export class UsersController {
             const updatedUser = await UserDAO.updateById(uid, updateData);
             if (!updatedUser) return res.status(404).json({ status: "error", message: "Usuario no encontrado" });
 
-            res.status(200).json({ status: "success", payload: updatedUser });
+            const userDTO = new UserDTO(updatedUser); 
+            res.status(200).json({ status: "success", payload: userDTO });
         } catch (error) {
             res.status(500).json({ status: "error", message: error.message });
         }
@@ -78,7 +85,8 @@ export class UsersController {
             const deletedUser = await UserDAO.deleteById(req.params.uid);
             if (!deletedUser) return res.status(404).json({ status: "error", message: "Usuario no encontrado" });
 
-            res.status(200).json({ status: "success", payload: deletedUser });
+            const userDTO = new UserDTO(deletedUser); 
+            res.status(200).json({ status: "success", payload: userDTO });
         } catch (error) {
             res.status(500).json({ status: "error", message: error.message });
         }

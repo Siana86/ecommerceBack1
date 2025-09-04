@@ -1,4 +1,5 @@
 import ViewsDAO from "../dao/ViewsDAO.js";
+import ProductDTO from "../dto/ProductsDTO.js";
 
 export class ViewsController {
     static getHome = async (req, res) => {
@@ -6,7 +7,7 @@ export class ViewsController {
             const { limit = 10, page = 1 } = req.query;
 
             const data = await ViewsDAO.getPaginatedProducts(limit, page);
-            const products = data.docs;
+            const products = ProductDTO.fromList(data.docs); // 🔥 DTO aquí
             delete data.docs;
 
             const links = [];
@@ -25,7 +26,7 @@ export class ViewsController {
             const { limit = 10, page = 1 } = req.query;
 
             const data = await ViewsDAO.getPaginatedProducts(limit, page);
-            const products = data.docs;
+            const products = ProductDTO.fromList(data.docs); // 🔥 DTO aquí
             delete data.docs;
 
             const links = [];
