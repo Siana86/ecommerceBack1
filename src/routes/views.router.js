@@ -1,13 +1,13 @@
 import express from "express";
-import { auth } from "../middleware/auth.js";
+import { auth, authorization } from "../middleware/auth.js";
 import { ViewsController} from "../controllers/ViewsController.js";
 
 
 const viewsRouter = express.Router();
 
-viewsRouter.get('/', ViewsController.getHome);
-viewsRouter.get('/realtimeproducts',ViewsController.getRealTimeProducts);
-viewsRouter.get('/registro', ViewsController.getRegistro);
+viewsRouter.get('/', auth, authorization(["public", "users", "admin"]), ViewsController.getHome);
+viewsRouter.get('/realtimeproducts',auth, authorization(["admin"]), ViewsController.getRealTimeProducts);
+viewsRouter.get('/registro',auth, authorization(["public"]), ViewsController.getRegistro);
 viewsRouter.get('/login', ViewsController.getLogin);
 viewsRouter.get('/perfil', auth, ViewsController.getPerfil);
 

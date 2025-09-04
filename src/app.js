@@ -43,7 +43,8 @@ connectMongoDB();
 ///Handlerbars config con helpers
 app.engine("handlebars", engine({
     helpers: {
-        eq: (a, b) => a === b
+        eq: (a, b) => a === b,
+        or: (a, b) => a || b
     }
 }));
 app.set("view engine", "handlebars");

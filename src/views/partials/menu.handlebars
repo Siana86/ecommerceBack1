@@ -1,5 +1,38 @@
 <a href="/">Inicio</a>
 <br>
+
+{{!-- Si el usuario está logueado --}}
+{{#if isLogin}}
+    <a href="/perfil">Perfil</a>
+    <br>
+    <a href="/api/sessions/logout">Logout</a>
+    <br>
+
+    {{!-- Solo admin ve el gestor de productos --}}
+    {{#if (eq role "admin")}}
+        <a href="/realTimeProducts">Gestor de productos</a>
+        <br>
+    {{/if}}
+
+    {{!-- Solo users y admin pueden comprar --}}
+    {{#if (or (eq role "users") (eq role "admin"))}}
+        <a href="/carrito">Mi Carrito</a>
+        <br>
+    {{/if}}
+{{else}}
+    {{!-- Rol público (no logueado) --}}
+    <a href="/registro">Registro</a>
+    <br>
+    <a href="/login">Login</a> 
+{{/if}}
+<br>
+
+
+
+
+
+{{!-- <a href="/">Inicio</a>
+<br>
 {{#if isLogin}}
     <a href="/perfil">Perfil</a>
     <br>
@@ -11,4 +44,4 @@
     <br>
     <a href="/login">Login</a>
 {{/if}}
-<br>
+<br>  --}}

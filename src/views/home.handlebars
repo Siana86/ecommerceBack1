@@ -1,6 +1,6 @@
 {{>menu}}
 
-<h1> Home </h1>
+<h1> Bienvenido a la home </h1>
 <h2>Productos</h2>
 
 
@@ -12,6 +12,33 @@
     <h6 class="card-subtitle mb-2 text-body-secondary">{{this.category}}</h6>
     <p class="card-text">{{this.description}}</p>
     <h6 class="card-subtitle mb-2 text-body-secondary">{{this.price}}</h6>
+    {{#if (eq role "users")}}
+    <a href="#" class="btn btn-primary">Comprar</a>
+    {{/if}}
+
+
+  </div>
+</div>
+{{/each}}
+
+<div>
+  {{#each links}}
+  <a href={{this.link}}>{{this.text}}</a>
+  {{/each}}
+</div>
+
+
+
+{{!-- {{#each products}}
+<div class="card" style="width: 18rem;">
+  <img src="{{this.thumbnail}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">{{this.category}}</h6>
+    <p class="card-text">{{this.description}}</p>
+    <h6 class="card-subtitle mb-2 text-body-secondary">{{this.price}}</h6>
+
+
     <a href="#" class="btn btn-primary">Comprar</a>
   </div>
 </div>
@@ -19,6 +46,6 @@
 
 <div>
   {{#each links}}
-    <a href={{this.link}}>{{this.text}}</a>
+  <a href={{this.link}}>{{this.text}}</a>
   {{/each}}
-</div>
+</div> --}}

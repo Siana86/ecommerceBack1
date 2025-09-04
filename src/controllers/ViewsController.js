@@ -3,23 +3,52 @@ import ProductDTO from "../dto/ProductsDTO.js";
 
 export class ViewsController {
     static getHome = async (req, res) => {
-        try {
-            const { limit = 10, page = 1 } = req.query;
+    try {
+        const { limit = 10, page = 1 } = req.query;
 
-            const data = await ViewsDAO.getPaginatedProducts(limit, page);
-            const products = ProductDTO.fromList(data.docs); // 🔥 DTO aquí
-            delete data.docs;
+        const data = await ViewsDAO.getPaginatedProducts(limit, page);
+        const products = ProductDTO.fromList(data.docs); 
+        delete data.docs;
 
-            const links = [];
-            for (let i = 1; i <= data.totalPages; i++) {
-                links.push({ text: i, link: `?limit=${limit}&page=${i}` });
-            }
-
-            res.render("home", { products, links });
-        } catch (error) {
-            res.status(500).send({ message: error.message });
+        const links = [];
+        for (let i = 1; i <= data.totalPages; i++) {
+            links.push({ text: i, link: `?limit=${limit}&page=${i}` });
         }
-    };
+
+        
+        const role = req.user?.role || "public";
+        const isLogin = role !== "public";
+
+        res.render("home", { 
+            products, 
+            links, 
+            role,     
+            isLogin   
+        });
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+
+    // static getHome = async (req, res) => {
+    //     try {
+    //         const { limit = 10, page = 1 } = req.query;
+
+    //         const data = await ViewsDAO.getPaginatedProducts(limit, page);
+    //         const products = ProductDTO.fromList(data.docs); // 🔥 DTO aquí
+    //         delete data.docs;
+
+    //         const links = [];
+    //         for (let i = 1; i <= data.totalPages; i++) {
+    //             links.push({ text: i, link: `?limit=${limit}&page=${i}` });
+    //         }
+
+    //         res.render("home", { products, links }); //Agregar rol
+    //     } catch (error) {
+    //         res.status(500).send({ message: error.message });
+    //     }
+    // };
 
     static getRealTimeProducts = async (req, res) => {
         try {
