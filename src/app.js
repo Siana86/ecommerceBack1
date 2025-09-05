@@ -108,11 +108,6 @@ app.post('/registro',async(req,res)=>{
 app.post(
     "/login",
 
-    (req, res, next) => {
-        console.log("Datos recibidos en el body:", req.body); // Para saber los datos que llegan en el body
-        next();
-    },
-
     passport.authenticate("login", {session:false, failureRedirect:"/error"}),
     (req, res) => {
 
@@ -131,7 +126,7 @@ app.post(
 
 app.get("/logout", (req, res) => {
 
-    res.clearCookie("cookieToken")
+    res.clearCookie("cookieToken", { httpOnly: true });
     res.setHeader('Content-Type', 'application/json');
     return res.status(200).json({ payload: "Logout exitoso!" });
 })
